@@ -155,6 +155,7 @@ def runSolver(sched: Schedule, costs: pd.DataFrame, name="SIM", minSize=26, maxS
                         else:
                             obj['E2'] = sched.getEvent(w + 1, e).code
                             obj['E2_COST'] = costs.loc[obj['Team'], obj['E2']]
+                            obj['TOTAL_COST'] = obj['E1_COST'] + obj['E2_COST']
             res.append(obj)
         if save:
             pd.DataFrame(res).to_csv('./data/' + name +
