@@ -122,7 +122,7 @@ def runSolver(sched: Schedule, costs: pd.DataFrame, name="SIM", minSize=26, maxS
             for e in all_events:
                 # If the event is invalid set cost extremely high
                 if e >= eventsPerWeek[w]:
-                    cost = 999999
+                    cost = 9999999
                 else:
                     team_val = costs.index[t]
                     event_val = sched.getEvent(w + 1, e).code
