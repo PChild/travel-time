@@ -73,7 +73,7 @@ def buildTravelCosts(events: List[FRCEvent], teamList: List[FRCTeam], name='SIM'
         './data/' + name + '_COSTS.csv', index=False)
 
 
-def runSolver(sched: Schedule, costs: pd.DataFrame, name="SIM", minSize=26, maxSize=40, playsPerTeam=2, save=False, print=True) -> int:
+def runSolver(sched: Schedule, costs: pd.DataFrame, name="SIM", minSize=26, maxSize=40, playsPerTeam=2, save=False, shouldPrint=True) -> int:
     eventsPerWeek = sched.getEventsPerWeek()
 
     numWeeks = len(eventsPerWeek)
@@ -139,7 +139,7 @@ def runSolver(sched: Schedule, costs: pd.DataFrame, name="SIM", minSize=26, maxS
     ret = np.nan
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         status_str = 'Optimal solution' if status == cp_model.OPTIMAL else 'Feasible solution'
-        if print:
+        if shouldPrint:
             print(status_str, "for", name,
                   f"\t total travel time = {solver.ObjectiveValue()}\n")
         ret = int(solver.ObjectiveValue())
@@ -151,14 +151,16 @@ def runSolver(sched: Schedule, costs: pd.DataFrame, name="SIM", minSize=26, maxS
                         if obj['E1'] == 0:
                             # w + 1 used because matrix is zero indexed
                             obj['E1'] = sched.getEvent(w + 1, e).code
+                            obj['E1_COST'] = costs.loc[obj['Team'], obj['E1']]
                         else:
                             obj['E2'] = sched.getEvent(w + 1, e).code
+                            obj['E2_COST'] = costs.loc[obj['Team'], obj['E2']]
             res.append(obj)
         if save:
             pd.DataFrame(res).to_csv('./data/' + name +
                                      '_ASSIGNMENTS.csv', index=False)
     else:
-        if print:
+        if shouldPrint:
             print("No solution found.")
     return ret
 
