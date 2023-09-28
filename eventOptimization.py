@@ -112,7 +112,10 @@ def runSolver(sched: Schedule, costs: pd.DataFrame, name="SIM", minSize=26, maxS
         for e in range(eventsPerWeek[w]):
 
             # send no more than max_size teams to an event
-            model.Add(sum(slots[t, w, e] for t in all_teams) <= maxSize)
+            cap = sched.getEvent(
+                w + 1, e).capacity if len(sched.getAllEvents()) > 6 else maxSize
+            model.Add(sum(slots[t, w, e] for t in all_teams)
+                      <= cap)
             # send at least min_Size teams to an event
             model.Add(sum(slots[t, w, e] for t in all_teams) >= minSize)
 
@@ -178,7 +181,7 @@ def main():
     costs = pd.read_csv('./data/2024chs_COSTS.csv', index_col=0)
 
     for sched in chsSeasons.options2024:
-        runSolver(sched, costs, sched.name, save=True)
+        runSolver(sched, costs, sched.name, minSize=0, save=True)
 
 
 if __name__ == "__main__":

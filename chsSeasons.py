@@ -1,16 +1,16 @@
 from schedules import FRCEvent, Schedule
 from typing import List
 
-blacksburg = FRCEvent('VABLA', 'Blacksburg High School, Blacksburg, VA')
-ashland = FRCEvent('VAASH', 'Patrick Henry High School, Ashland, VA')
-portsmouth = FRCEvent('VAPOR', 'Churchland High School, Portsmouth, VA')
-glenAllen = FRCEvent('VAGLE', 'Deep Run High School, Glen Allen, VA')
-severn = FRCEvent('MDSEV', 'Archbishop Spalding High School, Severn, MD')
-fallsChurch = FRCEvent('VAFAL', 'Meridian High School, Falls Church, VA')
-owingsMills = FRCEvent('MDOWI', 'McDonogh School, Owings Mills, MD')
-edgewater = FRCEvent('MDEDG', 'South River High School, Edgewater, MD')
-hayfield = FRCEvent('VAALE', 'Hayfield Secondary School, Alexandria, VA')
-bethesda = FRCEvent('MDBET', 'Walt Whitman High School, Bethesda, MD')
+blacksburg = FRCEvent('VABLA', 'Blacksburg High School, Blacksburg, VA', 32)
+ashland = FRCEvent('VAASH', 'Patrick Henry High School, Ashland, VA', 36)
+portsmouth = FRCEvent('VAPOR', 'Churchland High School, Portsmouth, VA', 36)
+glenAllen = FRCEvent('VAGLE', 'Deep Run High School, Glen Allen, VA', 36)
+severn = FRCEvent('MDSEV', 'Archbishop Spalding High School, Severn, MD', 36)
+fallsChurch = FRCEvent('VAFAL', 'Meridian High School, Falls Church, VA', 36)
+owingsMills = FRCEvent('MDOWI', 'McDonogh School, Owings Mills, MD', 32)
+edgewater = FRCEvent('MDEDG', 'South River High School, Edgewater, MD', 36)
+hayfield = FRCEvent('VAALE', 'Hayfield Secondary School, Alexandria, VA', 36)
+bethesda = FRCEvent('MDBET', 'Walt Whitman High School, Bethesda, MD', 36)
 
 real2024 = Schedule(name="real2024",
                     week1=[blacksburg, ashland],

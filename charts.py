@@ -68,15 +68,50 @@ def eventSizePlot(labels):
         else:
             plt.ylabel("Number of Teams")
         plt.title(labels[idx], fontsize=24)
-    plt.suptitle('Comparison of Schedules with No Minimum Event Size')
+    plt.suptitle('Comparison of Event Sizes for Different Schedules')
     plt.show()
+
+
+def singlePlot(show=False):
+    eventSizeData = {}
+    for event in chsSeasons.real2024.getAllEvents():
+        if event.code not in eventSizeData:
+            eventSizeData[event.code] = 0
+    assigns = pd.read_csv(
+        './data/' + chsSeasons.real2024.name + '_ASSIGNMENTS.csv')
+    for row in assigns.iterrows():
+        eventSizeData[row[1].E1] += 1
+        eventSizeData[row[1].E2] += 1
+
+    plt.style.use('pchild.style')
+    fig = plt.figure(figsize=(21, 15), dpi=100, layout='tight')
+    colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
+
+    heights = [eventSizeData[event] for event in eventSizeData]
+    x_vals = np.arange(1, len(eventSizeData) + 1, 1)
+    plt.bar(x=x_vals, height=heights)
+    plt.xticks(x_vals, [e for e in eventSizeData], fontsize=24)
+
+    for i, x in enumerate(x_vals):
+        plt.text(x, heights[i] - 0.25, heights[i],
+                 color='w', ha='center', va='top', fontsize=24)
+    else:
+        plt.ylabel("Number of Teams")
+
+    title = "Travel Optimizied 2024 CHS Event Assignments"
+    plt.title(title, fontsize=32)
+    if show:
+        plt.show()
+    else:
+        plt.savefig(title + ".png")
 
 
 def main():
     labels = ["Real", "Edgewater", "Alexandria",
               "Six Events", "Bethesda", "Swap Ashland"]
     # eventSizePlot(labels)
-    boxPlotCompare(labels)
+    # boxPlotCompare(labels)
+    singlePlot()
 
 
 if __name__ == "__main__":
